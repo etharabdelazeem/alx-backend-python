@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-import math
+
 '''
     Basic annotations for variables.
 '''
+import math
 
 
 def floor(n: float) -> int:
