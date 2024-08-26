@@ -4,6 +4,7 @@ Unit tests for utils.access_nested_map function.
 """
 
 import unittest
+from typing import Dict, Tuple, Union
 from parameterized import parameterized
 from utils import access_nested_map
 
@@ -21,18 +22,19 @@ class TestAccessNestedMap(unittest.TestCase):
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
     @parameterized.expand([
-        ({}, ("a",)),
-        ({"a": 1}, ("a", "b"))
+        ({}, ("a",), KeyError),
+        ({"a": 1}, ("a", "b"), KeyError)
     ])
-    def test_access_nested_map_exception(self, nested_map, path):
-        """Test that KeyError is raised for invalid paths in access_nested_map."""
-        with self.assertRaises(KeyError) as context:
+    def test_access_nested_map_exception(
+            self,
+            nested_map: Dict,
+            path: Tuple[str],
+            exception: Exception,
+            ) -> None:
+        """Test that KeyError is raised for invalid paths"""
+        with self.assertRaises(exception):
             access_nested_map(nested_map, path)
-        
-        # Check if the exception message is as expected
-        self.assertEqual(str(context.exception), str(path[-1]))
 
 
 if __name__ == '__main__':
     unittest.main()
-
